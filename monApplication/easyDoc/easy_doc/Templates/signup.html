@@ -1,13 +1,147 @@
 {% extends 'base.html' %}
+{% block style %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
 
+  .login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .login-container input[type="text"],
+  .login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .login-container button:hover {
+    background-color: #45a049;
+  }
+
+  .login-container .signup-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .login-container .forgot-password-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+{% endblock %}
+{% block _nav %}
+
+{%endblock%}
+<title>{% block title %}Inscription{% endblock %}</title>
 {% block content %}
-  <h2>Inscription</h2>
-  <form method="POST" action="{% url 'signup' %}">
-    {% csrf_token %}
-    <label for="username">Nom d'utilisateur:</label>
-    <input type="text" id="username" name="username" required>
-    <label for="password">Mot de passe:</label>
-    <input type="password" id="password" name="password" required>
-    <a href="{% url 'login' %}">S'inscrire</a>
-  </form>
+<div class="container">
+  <div class="row">
+    <div class="login-container mt-4 mb-8">
+      <h2><i class="fas fa-user"></i>Inscription</h2>
+      <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur" required>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse" required>
+        <input type="text" class="form-control" id="tele" name="tele" placeholder="Numéro de téléphone" required>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+        <input type="password" class="form-control" id="passwordC" name="passwordC" oninput="validatePassword(this)" placeholder="Confirmation du mot de passe" required>
+        <select name="roles" id="roles" class="form-select mb-4">
+          {% for role in roles %}
+            <option value="{{ role.0 }}">{{ role.1 }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" >S'inscrire</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  // Sélectionnez le bouton "S'inscrire" par son ID
+  var signupButton = document.querySelector('button[type="button"]');
+  // Ajoutez un gestionnaire d'événement pour le clic sur le bouton "S'inscrire"
+  signupButton.addEventListener('click', function() {
+    // Appelez la fonction data()
+    data();
+    // Soumettez le formulaire
+    document.getElementById('signup-form').submit();
+  });
+</script>
+
+  function data() {
+    // Expression régulière pour valider le format de l'e-mail
+    var emailRegex = /^[\w.-]+@[\w.-]+\.\w{2,}$/;
+    var phoneFormat = /^(\+212|00212|0)(6|7)[0-9]{8}$/g;
+    // Récupérer la valeur du champ en supprimant les espaces avant et après
+    var email = document.getElementById('email').value.trim(),
+      tele = document.getElementById('tele').value.trim();
+
+    if (validate()) {
+      alert('Tous les champs sont obligatoires');
+    }
+    else {
+      if (!email.match(emailRegex)) {
+        alert("Email non valide");
+      }
+      else {
+        if (!tele.match(phoneFormat)) {
+          alert("Numéro de téléphone non valide");
+        }
+        else {
+          if (!validatePassword()) {
+            alert("vérifier les mots de passe");
+          }
+        }
+      }
+    }
+  }
+
+  function validatePassword(input) {
+    var password = document.getElementById("password").value.trim();
+    var passwordC = document.getElementById("passwordC").value.trim();
+    if (password == passwordC) {
+      return true;
+    }
+    return false;
+  }
+
+  function validate() {
+    if (
+      document.getElementById('username').value == "" ||
+      document.getElementById('adresse').value == "" ||
+      document.getElementById('email').value == "" ||
+      document.getElementById('tele').value == "" ||
+      document.getElementById('password').value == "" ||
+      document.getElementById('passwordC').value == "")
+      return true;
+    return false;
+  }
+</script>
 {% endblock %}

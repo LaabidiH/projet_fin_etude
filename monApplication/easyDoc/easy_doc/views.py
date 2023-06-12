@@ -2,18 +2,35 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import auth
+from .models import *
 
 
 def Home(request):
-    return render(request,'home.html')
 
+    context = {}
+    data = Personne.objects.filter(active=False)
+    return render(request,'home.html', {'data':data})
 
 def signup(request):
+    roles = Personne.service_role
     if request.method == 'POST':
-        
-        # Traiter les données du formulaire d'inscription ici
+        username = request.POST['username']
+        password = request.POST['password']
+        adresse = request.POST['adresse']
+        email = request.POST['email']
+        tele = request.POST['tele']
+        service = request.POST['roles']
+        personne = Personne(
+            username=username,
+            password=password,
+            adresse=adresse,
+            email=email,
+            tele=tele, 
+            roles=service
+        )
+        personne.save()
         return redirect('login')
-    return render(request, 'signup.html')
+    return render(request, 'signup.html', {'roles':roles})
 
 def user_login(request):
     if request.method == 'POST':
