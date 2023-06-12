@@ -1,0 +1,37 @@
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import auth
+
+
+def Home(request):
+    return render(request,'home.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+        
+        # Traiter les données du formulaire d'inscription ici
+        return redirect('login')
+    return render(request, 'signup.html')
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # L'authentification a réussi
+            login(request, user)
+            return redirect('Home')
+        else:
+            # L'authentification a échoué
+            error_message = "Nom d'utilisateur ou mot de passe incorrect."
+            return render(request, 'login.html', {'error_message': error_message})
+    return render(request, 'login.html')
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+

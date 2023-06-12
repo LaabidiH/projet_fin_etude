@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Inscription</h2>
+  <form method="POST" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <label for="username">Nom d'utilisateur:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Mot de passe:</label>
+    <input type="password" id="password" name="password" required>
+    <a href="{% url 'login' %}">S'inscrire</a>
+  </form>
+{% endblock %}

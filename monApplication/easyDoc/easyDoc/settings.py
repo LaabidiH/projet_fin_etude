@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'easy_doc',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'easyDoc.urls'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 TEMPLATES = [
     {
