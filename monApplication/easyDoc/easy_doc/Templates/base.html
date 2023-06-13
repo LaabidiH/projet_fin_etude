@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -21,7 +22,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
     <style>
-        
         .card {
             height: 100%;
         }
@@ -30,19 +30,104 @@
             background-color: rgb(243, 239, 239);
             font-weight: bold;
         }
+
+        .sidebar {
+            background-color: #f2f2f2;
+            width: 250px;
+            background-color: #f2f2f2;
+            float: left;
+            min-height: 600px;
+            position: relative;
+        }
+
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 10px;
+        }
+
+        .sidebar li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .sidebar li a:hover {
+            color: #ff0000;
+        }
+
+        .contenu {
+            margin-left: 250px;
+            /* Largeur de la barre latérale */
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            min-height: 600px;
+        }
+
+        .bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #ccc;
+            padding: 10px;
+        }
+
+        a.bouton {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ccc;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        a.bouton:hover {
+            background-color: #7c9ee6;
+        }
     </style>
-    {% block style%}     {%endblock%}
+    {% block style%} {%endblock%}
 </head>
 
 <body>
-    {% block _nav %}
-    {% include '_nav.html' %}
+    {% block sidebar %}
+    <div class="sidebar">
+        <div>
+            {% block titleSid %}{% endblock %}
+        </div>
+
+        <div class="mt-4 text-center">
+            <ul>
+                <li><a href="{% url 'Home' %}">Gestion des comptes</a></li>
+                <li><a href="#">Les dossiers</a></li>
+                <li><a href="#">*******</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="bottom">
+            <a href="{% url 'login' %}" class="bouton">Se déconnecter</a>
+        </div>
+    </div>
     {%endblock%}
-    {% block content %} {%endblock%}
+    
+    <div class="contenu">
+        {% block content %} {%endblock%}
+    </div>
+
+
     {% include '_footer.html' %}
     <!-- MDB -->
     {% block scripts %} {% endblock %}
-    
+
     <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>

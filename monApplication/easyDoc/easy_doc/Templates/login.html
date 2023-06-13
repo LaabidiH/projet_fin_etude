@@ -6,6 +6,7 @@
   body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
+    align-items: center;
   }
 
   .login-container {
@@ -56,20 +57,32 @@
     text-align: center;
     margin-top: 10px;
   }
+  .contenu{
+    margin: 0 0 0 0;
+    background-color: #f8f8f8;
+  }
+
 </style>
 {% endblock %}
+
+
 {% block _nav %}
 {%endblock%}
+
+{% block sidebar %}
+{% endblock %}
+
 {% block content %}
+
 <div class="container">
   <div class="row">
     <div class="login-container mt-4 mb-8">
       <h2><i class="fas fa-user"></i>Connexion</h2>
 
       {% if error_message %}
-      <div class="alert alert-danger text-center" >
-          {{error_message}}
-    </div>
+      <div class="alert alert-danger text-center">
+        {{error_message}}
+      </div>
       {% endif %}
 
       <form action="" method="post" novalidate>

@@ -1,0 +1,20 @@
+{% block sidebar %}
+<div class="sidebar">
+    <div>
+        {% block titleSid %}{% endblock %}
+    </div>
+
+    <div class="mt-4 text-center">
+        <ul>
+            <li><a href="#">Accueil</a></li>
+            <li><a href="#">À propos</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="bottom">
+        <a href="{% url 'login' %}" class="bouton">Se déconnecter</a>
+    </div>
+</div>
+{%endblock%}
